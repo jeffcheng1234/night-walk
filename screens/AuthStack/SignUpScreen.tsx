@@ -4,6 +4,7 @@ import { Text, SafeAreaView, StyleSheet, ScrollView } from "react-native";
 import { Appbar, TextInput, Snackbar, Button } from "react-native-paper";
 import { AuthStackParamList } from "./AuthStackScreen";
 import firebase from "firebase";
+import { UserModel, userType } from "../../models/user";
 
 interface Props {
   navigation: StackNavigationProp<AuthStackParamList, "SignUpScreen">;
@@ -14,6 +15,10 @@ export default function SignUpScreen({ navigation }: Props) {
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [type, setType] = useState<userType>(userType.User);
+  const [username, setUsername] = useState("");
+  const [number, setContactNumber] = useState("");
+
   /* Screen Requirements:
       - AppBar
       - Email & Password Text Input
@@ -28,19 +33,21 @@ export default function SignUpScreen({ navigation }: Props) {
       https://firebase.google.com/docs/auth/web/start
   */
 
-  const signup = () => {
-    firebase
+  const signup = async () => {
+    const userCredential = await firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        showError("failed to signup");
-        // ..
-      });
+      .createUserWithEmailAndPassword(email, password);
+    const uid = userCredential.user!.uid;
+    const userObject: UserModel = {
+      id: uid,
+      email: email,
+      userType: type,
+      contactNumber: number,
+      photoURL: "",
+      name: username,
+    };
+    const usersRef = firebase.firestore().collection("users").doc(uid);
+    await usersRef.set(userObject);
   };
 
   const showError = (error: string) => {
@@ -81,7 +88,48 @@ export default function SignUpScreen({ navigation }: Props) {
             width: "85%",
           }}
         />
-
+        <TextInput
+          label="Name"
+          value={username}
+          onChangeText={(name: any) => setUsername(name)}
+          style={{
+            backgroundColor: "white",
+            marginTop: 10,
+            marginBottom: 20,
+            marginLeft: "7.5%",
+            width: "85%",
+          }}
+        />
+        <TextInput
+          label="Contact Number"
+          value={number}
+          onChangeText={(name: any) => setContactNumber(name)}
+          style={{
+            backgroundColor: "white",
+            marginTop: 10,
+            marginBottom: 20,
+            marginLeft: "7.5%",
+            width: "85%",
+          }}
+        />
+        <Button
+          mode="contained"
+          onPress={() => {
+            if (type == userType.User) {
+              setType(userType.Admin);
+            } else {
+              setType(userType.User);
+            }
+          }}
+          style={{
+            marginTop: 10,
+            marginBottom: 20,
+            marginLeft: "7.5%",
+            width: "85%",
+          }}
+        >
+          {`ACCOUNT TYPE: ${type}`}
+        </Button>
         <Button
           mode="contained"
           onPress={signup}

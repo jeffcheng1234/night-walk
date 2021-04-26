@@ -1,13 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import FeedScreen from "./FeedScreen/FeedScreen.main";
-import DetailScreen from "./DetailScreen/DetailScreen.main";
-import { SocialModel } from "../../../models/social";
+import MapViewAdminScreen from "./MapViewAdmin/MapViewAdminScreen.main";
+import MapViewUserScreen from "./MapViewUser/MapViewUserScreen.main";
 
 export type MainStackParamList = {
-  FeedScreen: undefined;
-  DetailScreen: { social: SocialModel };
-  NewSocialScreen: undefined;
+  MapView: undefined;
+  NewRequest: undefined;
 };
 
 const MainStack = createStackNavigator<MainStackParamList>();
@@ -16,15 +14,15 @@ export function MainStackScreen() {
   return (
     <MainStack.Navigator>
       <MainStack.Screen
-        name="FeedScreen"
+        name="MapView"
         options={{ headerShown: false }}
-        component={FeedScreen}
+        component={MapViewAdminScreen}
       />
-      <MainStack.Screen
-        name="DetailScreen"
+      {/* <MainStack.Screen
+        name="NewRequest"
         options={{ headerShown: false }}
-        component={DetailScreen}
-      />
+        component={NewRequestScreen}
+      /> */}
     </MainStack.Navigator>
   );
 }

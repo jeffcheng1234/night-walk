@@ -11,6 +11,8 @@ export const AppStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLOR_BACKGROUND,
+    alignItems: "center",
+    justifyContent: "center",
   },
   h1: {
     fontSize: 32,

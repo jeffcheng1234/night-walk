@@ -4,6 +4,7 @@ import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { COLOR_ACCENT, COLOR_PRIMARY } from "./AppStyles";
 import firebase from "firebase";
 import { EntryStackScreen } from "./screens/EntryStackScreen";
+import MapView from "react-native-maps";
 
 // Make sure to create a file called "keys.json" in your project
 // directory & add your Firebase configuration keys to that file.
@@ -31,6 +32,7 @@ export default function App() {
     <SafeAreaProvider>
       <PaperProvider theme={theme}>
         <EntryStackScreen />
+        {/* <MapView /> */}
       </PaperProvider>
     </SafeAreaProvider>
   );

@@ -1,12 +1,12 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MainStackScreen } from "./MainStack/MainStackScreen";
-import NewSocialScreen from "./NewSocialScreen/NewSocialScreen.main";
+import UserInfoScreen from "./UserInfoScreen/UserInfoScreen.main";
 import { NavigationContainer } from "@react-navigation/native";
 
 export type RootStackParamList = {
   Main: undefined;
-  NewSocialScreen: undefined;
+  UserInfo: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -21,11 +21,11 @@ export function RootStackScreen() {
           component={MainStackScreen}
           options={options}
         />
-        <RootStack.Screen
-          name="NewSocialScreen"
+        {/* <RootStack.Screen
+          name="UserInfo"
           options={options}
-          component={NewSocialScreen}
-        />
+          component={UserInfoScreen}
+        /> */}
       </RootStack.Navigator>
     </NavigationContainer>
   );
