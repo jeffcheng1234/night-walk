@@ -3,10 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { MainStackScreen } from "./MainStack/MainStackScreen";
 import UserInfoScreen from "./UserInfoScreen/UserInfoScreen.main";
 import { NavigationContainer } from "@react-navigation/native";
+import { UserModel } from "../../models/user";
+import MapViewScreen from "./MainStack/MapView/MapViewScreen.main";
 
 export type RootStackParamList = {
-  Main: undefined;
-  UserInfo: undefined;
+  MapViewScreen: { user: UserModel };
+  UserInfoScreen: { user: UserModel };
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -15,17 +17,17 @@ export function RootStackScreen() {
   const options = { headerShown: false };
   return (
     <NavigationContainer>
-      <RootStack.Navigator mode="modal" initialRouteName="Main">
+      <RootStack.Navigator mode="modal" initialRouteName="MapViewScreen">
         <RootStack.Screen
-          name="Main"
-          component={MainStackScreen}
+          name="MapViewScreen"
           options={options}
+          component={MapViewScreen}
         />
-        {/* <RootStack.Screen
-          name="UserInfo"
+        <RootStack.Screen
+          name="UserInfoScreen"
           options={options}
           component={UserInfoScreen}
-        /> */}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );
